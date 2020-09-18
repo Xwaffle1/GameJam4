@@ -1,7 +1,7 @@
 extends RigidBody
 
 var velocity = Vector3()
-
+var can_jump = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,12 +12,18 @@ func _input(event):
 
 func jump():	
 	print("JUMP")
-
+	
+func _physics_process(delta):
+	can_jump = $JumpRayCast.is_colliding()
+	print(can_jump)
+	if $JumpRayCast.get_collider() != null:
+		print($JumpRayCast.get_collider().name)
+	
 func can_jump():
-	return $JumpRayCast.is_colliding()
+	return can_jump
 
 func _integrate_forces(state):
-	print(can_jump())
+	
 	state.linear_velocity.x = 1
 	var velocity = Vector3(1,0,0)
 
